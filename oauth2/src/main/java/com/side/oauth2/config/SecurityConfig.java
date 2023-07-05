@@ -21,6 +21,7 @@ public class SecurityConfig {
         http
             .csrf(req -> req.disable())
             .authorizeHttpRequests(req -> req
+                .requestMatchers("/images/**").permitAll()
                 .anyRequest().authenticated()
             )
             .formLogin(req -> req
