@@ -7,6 +7,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import jakarta.servlet.DispatcherType;
+
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfig {
@@ -21,17 +23,19 @@ public class SecurityConfig {
         http
             .csrf(req -> req.disable())
             .authorizeHttpRequests(req -> req
+                .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
                 .requestMatchers("/images/**").permitAll()
                 .anyRequest().authenticated()
             )
-            .formLogin(req -> req
-                .loginPage("/login")
-                .permitAll()
-            )
-            // .oauth2Login(req -> req
+            // .formLogin(req -> req
             //     .loginPage("/login")
             //     .permitAll()
             // )
+            .oauth2Login(req -> req
+                .loginPage("/login")
+                .defaultSuccessUrl("/")
+                .permitAll()
+            )
             .logout(req -> req
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/login")
