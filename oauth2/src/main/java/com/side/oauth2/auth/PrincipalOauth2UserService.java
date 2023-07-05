@@ -11,6 +11,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import com.side.oauth2.auth.userInfo.KakaoUserInfo;
+import com.side.oauth2.auth.userInfo.NaverUserInfo;
 import com.side.oauth2.auth.userInfo.OAuth2UserInfo;
 import com.side.oauth2.model.account.Account;
 import com.side.oauth2.model.account.AccountRepository;
@@ -29,7 +30,9 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         OAuth2UserInfo oAuth2UserInfo = null;
         String provider = userRequest.getClientRegistration().getRegistrationId();
 
-        if (provider.equals("kakao")) {
+        if (provider.equals("naver")) {
+            oAuth2UserInfo = new NaverUserInfo(oAuth2User.getAttributes());
+        } else if (provider.equals("kakao")) {
             oAuth2UserInfo = new KakaoUserInfo(oAuth2User.getAttributes());
         }
 
