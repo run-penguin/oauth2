@@ -10,6 +10,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import com.side.oauth2.auth.userInfo.GoogleUserInfo;
 import com.side.oauth2.auth.userInfo.KakaoUserInfo;
 import com.side.oauth2.auth.userInfo.NaverUserInfo;
 import com.side.oauth2.auth.userInfo.OAuth2UserInfo;
@@ -30,9 +31,13 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         OAuth2UserInfo oAuth2UserInfo = null;
         String provider = userRequest.getClientRegistration().getRegistrationId();
 
-        if (provider.equals("naver")) {
+        if (provider.equals("google")) {
+            oAuth2UserInfo = new GoogleUserInfo(oAuth2User.getAttributes());
+        }
+        else if (provider.equals("naver")) {
             oAuth2UserInfo = new NaverUserInfo(oAuth2User.getAttributes());
-        } else if (provider.equals("kakao")) {
+        }
+        else if (provider.equals("kakao")) {
             oAuth2UserInfo = new KakaoUserInfo(oAuth2User.getAttributes());
         }
 
