@@ -9,7 +9,12 @@ public class IndexController {
 
     @GetMapping("")
     public String indexPage() {
-        return "index";
+        return "index.html";
+    }
+
+    @GetMapping("login")
+    public String loginPage() {
+        return "login.html";
     }
     
 }
